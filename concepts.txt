@@ -1,0 +1,11 @@
+1. TCP/IP and Socket Programming
+2. Concurrency and Multithreading
+3. Mutex and Synchronization
+4. Data Structures! like hash tables for key-value storing, and vectors
+5. Parsing and REPS protocol
+6. Check for files I/O Presitance
+7. Signal handling 
+8. Command processing and response formatting
+9. Singleton pattern
+10. Bitwise operators '|='
+11. std::
