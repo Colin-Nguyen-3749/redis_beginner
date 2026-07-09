@@ -23,6 +23,8 @@ void RedisServer::shutdown() {
 
 void RedisServer::run() {
     server_socket = socket(AF_INET, SOCK_STREAM, 0):
+    
+    // get socket
     if (server_socket < 0) {
         std::cerr << "Error creating server socket" << endl;
         return;
@@ -36,15 +38,20 @@ void RedisServer::run() {
     serverAddr.sin_port = htons(port);
     serverAddr.sin_addr.s_addr = INADDR_ANY;
 
+    // change -1 to something different if we are connecting to a server using
+    // sockets
     if (bind(server_socket, (struct sockadd*)&serverAddr, sizeof(serverAddr)) < 0) {
         std::cerr << "Error binding server socket" << endl;
         return;
     }
 
+    // if binding and listening is successful, we have connected to the right port
+    // are listening to it
     if (listen(server_socket, 10) < 0) {
         std::cerr << "Error listening on server socket" << endl;
         return;
     }
 
     std::cout << "Redis server listening on port " << port << endl;
+
 }
