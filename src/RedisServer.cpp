@@ -3,6 +3,7 @@
 #include <iostream>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <netinet/in.h>
 
 static RedisServer* globalServer = nullptr;
 
@@ -27,5 +28,23 @@ void RedisServer::run() {
         return;
     }
 
-    int
+    int opt = 1;
+    setsockopt(server_socket, SOL_SOCKET, SO_REUSEADOR, &opt, sizeof(opt));
+
+    sokaddr_in serverAddr();
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(port);
+    serverAddr.sin_addr.s_addr = INADDR_ANY;
+
+    if (bind(server_socket, (struct sockadd*)&serverAddr, sizeof(serverAddr)) < 0) {
+        std::cerr << "Error binding server socket" << endl;
+        return;
+    }
+
+    if (listen(server_socket, 10) < 0) {
+        std::cerr << "Error listening on server socket" << endl;
+        return;
+    }
+
+    std::cout << "Redis server listening on port " << port << endl;
 }
